@@ -4,6 +4,8 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
 
+import org.junit.Test;
+
 
 /**
  * FutureTask is asynchronous taks. 
@@ -13,7 +15,8 @@ import java.util.concurrent.FutureTask;
  */
 public class TestFutureTask {
 	
-	public static void main(String args[]) {
+	@Test
+	public void testFutureTask() {
 		Callable<Integer> cal = new Callable<Integer>() {
 			public Integer call() {
 				System.out.println("I need some sleep!");
