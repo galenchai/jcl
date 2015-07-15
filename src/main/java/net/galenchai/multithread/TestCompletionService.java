@@ -21,7 +21,7 @@ public class TestCompletionService {
 		for (int i = 0; i < 5; i ++) {
 			cs.submit(new Callable<String>() {
 				public String call() {
-					for (int j = 0; j < 1000; j ++) {
+					for (int j = 0; j < 10000000; j ++) {
 						System.out.println(Thread.currentThread().getName());
 					}
 					return Thread.currentThread().getName();

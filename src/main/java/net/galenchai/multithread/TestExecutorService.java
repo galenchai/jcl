@@ -15,6 +15,8 @@ public class TestExecutorService {
 	
 	/**
 	 * We can only see pool-1-thread-1 in console, this proves that there are only one thread activated each time
+	 * When invoke shutdown, ExecutorService won't accept new Thread and won't block the thread, but it will wait until all the submitted task are done
+	 * awaitTermination() method will block the thread until timeout or interrupted or task finish
 	 */
 	//@Test
 	public void testSingleThreadExecutor() {
@@ -57,7 +59,7 @@ public class TestExecutorService {
 		}
 		List<Future<String>> futureList = null;
 		try {
-			futureList = es.invokeAll(callList);
+			futureList = es.invokeAll(callList);// it will be blocked when not all the tasks are finished
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
@@ -86,7 +88,7 @@ public class TestExecutorService {
 		}
 		List<Future<String>> futureList = null;
 		try {
-			futureList = es.invokeAll(callList);
+			futureList = es.invokeAll(callList);// it will be blocked when not all the tasks are finished
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
@@ -109,7 +111,7 @@ public class TestExecutorService {
 class TestCallable implements Callable<String> {
 
 	public String call() throws Exception {
-		for (int i = 0; i < 10; i ++) {
+		for (int i = 0; i <1000000; i ++) {
 			System.out.println(Thread.currentThread().getName());
 		}
 		return Thread.currentThread().getName() + " is finished!";

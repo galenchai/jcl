@@ -12,22 +12,22 @@ public class Test {
 
 	public static void main(String args[])	{
 		try {
-		ExecutorService es = Executors.newCachedThreadPool();
-		Hello e = new Hello();
-		Hello e1 = new Hello();
+		ExecutorService es = Executors.newFixedThreadPool(12);
 		List<Hello> eList = new ArrayList<Hello>();
-		eList.add(e);
-		eList.add(e1);
-		List<Future<String>> sFList = es.invokeAll(eList);
+		for (int i = 0; i < 10; i ++) {
+			eList.add(new Hello());
+		}
+		List<Future<String>> sFList = es.invokeAll(eList); 
+		//es.shutdown(); //If we submitted
+		//es.awaitTermination(60L, TimeUnit.HOURS);
+		//es.submit(new Hello());
 //		es.submit(e);
 //		es.submit(e1);
 		for (Future<String> fStr : sFList) {
-		//	if (fStr.isDone()) {
-				System.out.println(fStr.get());
-		//	}
+			System.out.println(fStr.get());
 		}
 		System.out.println("test");
-		es.shutdown();
+		//es.shutdown(); //If we submitted 
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		} catch (ExecutionException e) {
@@ -42,7 +42,7 @@ public class Test {
 class Hello implements Callable<String> {
 
 	public String call() throws Exception {
-		for (int t = 0; t <= 100000; t ++) {
+		for (int t = 0; t < 1000000; t ++) {
 			System.out.println(Thread.currentThread().getName());
 		}
 		return "I finished";
